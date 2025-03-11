@@ -29,6 +29,7 @@ def construct_spanning_tree(adj_list, order):
     added_edges = []
     stack = [order[0]]
     visited.add(order[0])
+    order_index = {node: i for i, node in enumerate(order)}
     
     step = 1
     while stack:
@@ -36,7 +37,8 @@ def construct_spanning_tree(adj_list, order):
         unvisited_neighbors = [n for n in adj_list[node] if n not in visited]
         
         if unvisited_neighbors:
-            neighbor = unvisited_neighbors[0]  
+            unvisited_neighbors.sort(key=lambda x: order_index[x])
+            neighbor = unvisited_neighbors[0]
             visited.add(neighbor)
             stack.append(neighbor)
             spanning_tree.add_edge(node, neighbor)
@@ -49,7 +51,7 @@ def construct_spanning_tree(adj_list, order):
     plt.show()
 
 if __name__ == "__main__":
-
+    
     # Section 9.3, Exercise 6
     adj_list = {
         'a': ['b', 'g', 'c'],
